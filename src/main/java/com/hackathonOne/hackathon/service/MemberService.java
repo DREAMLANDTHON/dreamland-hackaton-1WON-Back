@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -21,7 +20,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public Long join(Member member){
+    public Long join(Member member) {
         validateDuplicateMember(member);
         memberRepository.save(member);
         return member.getId();
@@ -30,79 +29,54 @@ public class MemberService {
     private void validateDuplicateMember(Member member) {
 
         Member findMember = memberRepository.findOne(member.getId());
-        if(findMember != null){
+        if (findMember != null) {
             throw new IllegalStateException("이미 존재하는 회원입니다.");
         }
     }
 
-    public Member findOne(Long memberId){
+    public Member findOne(Long memberId) {
         return memberRepository.findOne(memberId);
     }
 
-//    public void update(Long id , String name , ) {
-//        Member member = memberRepository.findOne(id);
-//        member.setName(name);
-//    }
-
     @Transactional
-    public void updateMemberHealthInfo(Long id , List<String> allergies, List<String> specialTypes) {
+    public void updateMemberHealthInfo(Long id, List<String> allergies, List<String> specialTypes) {
         Member member = memberRepository.findOne(id);
 
         List<Allergy> allergtList = new ArrayList<>();
 
-        for(String s : allergies){
+        for (String s : allergies) {
             Allergy allergy = new Allergy();
             allergy.setName(s);
-//            allergy.setMember(member);
-//            allergtList.add(allergy);
-
             member.addAllergy(allergy);
         }
 
         List<SpecialType> spcialTypeList = new ArrayList<>();
 
-        for(String s : specialTypes){
+        for (String s : specialTypes) {
             SpecialType specialType = new SpecialType();
             specialType.setName(s);
-//            specialType.setMember(member);
-//            spcialTypeList.add(specialType);
             member.addSpecialType(specialType);
         }
-
-//
-//        member.setAllergies(allergtList);
-//        member.setSpecialTypes(spcialTypeList);
     }
 
     @Transactional
-    public void updateLike(Long user_id , String item_name){
+    public void updateLike(Long user_id, String item_name) {
         Member findMember = memberRepository.findOne(user_id);
 
         CanEat canEat = new CanEat();
         canEat.setName(item_name);
-//        findMember.getCanEats().stream().map(o -> {if (o.getName() == item_name) return ; });
         boolean exists = findMember.getCanEats().stream()
                 .anyMatch(o -> o.getName().equals(item_name));
-        if(!exists) findMember.addCanEat(canEat);
+        if (!exists) findMember.addCanEat(canEat);
 
     }
 
     @Transactional
-    public void deleteLike(Long user_id , String item_name){
+    public void deleteLike(Long user_id, String item_name) {
         Member findMember = memberRepository.findOne(user_id);
 
-
-//        boolean exists = findMember.getCanEats().stream()
-//                .anyMatch(o -> o.getName().equals(item_name));
-//
-//        if(exists){
-//            List<CanEat> removedLikes = findMember.getCanEats().stream().filter(o -> !o.getName().equals(item_name)).collect(Collectors.toList());
-//            findMember.setCanEats(removedLikes);
-//
-//        }
-
-        for(CanEat canEat : findMember.getCanEats()){
-            if(canEat.getName().equals(item_name)){
+        for (CanEat canEat : findMember.getCanEats()) {
+            if (canEat.getName().equals(item_name)) {
 
                 findMember.getCanEats().remove(canEat);
                 canEat.setMember(null);
@@ -110,8 +84,5 @@ public class MemberService {
                 return;
             }
         }
-//        findMember.getCanEats().stream()
-//                .anyMatch(o -> o.getName().equals(item_name))
-
     }
 }

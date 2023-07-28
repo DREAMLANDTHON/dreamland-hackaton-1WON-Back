@@ -1,9 +1,5 @@
 package com.hackathonOne.hackathon.domain.response;
 
-import com.hackathonOne.hackathon.domain.entity.Allergy;
-import com.hackathonOne.hackathon.domain.entity.CanEat;
-import com.hackathonOne.hackathon.domain.entity.SpecialType;
-import com.hackathonOne.hackathon.domain.request.UpdateMemberRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -33,6 +29,7 @@ public class GetProfileResponse {
 
         // getters and setters
     }
+
     @Data
     @AllArgsConstructor
     public static class SpecialTypeDto {

@@ -12,7 +12,6 @@ public class UpdateMemberRequest {
     private List<CanEatDto> canEats;
 
 
-
     public static class MemberDto {
 
         private String name;

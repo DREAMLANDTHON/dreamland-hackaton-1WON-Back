@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-public class likeController {
+public class LikeController {
 
     private final MemberService memberService;
 
@@ -18,17 +18,17 @@ public class likeController {
      */
 
     @PostMapping("/api/item/{user_id}/like")
-    public LikeResponse addLike(@PathVariable("user_id")Long user_id, @RequestBody @Valid LikeRequest request){
-        memberService.updateLike(user_id, request.getName());
+    public LikeResponse addLike(@PathVariable("user_id") Long userId, @RequestBody @Valid LikeRequest request) {
+        memberService.updateLike(userId, request.getName());
 
-        return new LikeResponse(user_id);
+        return new LikeResponse(userId);
     }
 
     @DeleteMapping("/api/item/{user_id}/like")
-    public LikeResponse deleteLike(@PathVariable("user_id")Long user_id, @RequestBody @Valid LikeRequest request){
-        memberService.deleteLike(user_id, request.getName());
+    public LikeResponse deleteLike(@PathVariable("user_id") Long userId, @RequestBody @Valid LikeRequest request) {
+        memberService.deleteLike(userId, request.getName());
 
-        return new LikeResponse(user_id);
+        return new LikeResponse(userId);
     }
 
 
