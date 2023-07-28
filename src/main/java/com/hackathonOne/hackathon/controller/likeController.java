@@ -5,10 +5,7 @@ import com.hackathonOne.hackathon.domain.response.LikeResponse;
 import com.hackathonOne.hackathon.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,4 +23,13 @@ public class likeController {
 
         return new LikeResponse(user_id);
     }
+
+    @DeleteMapping("/api/item/{user_id}/like")
+    public LikeResponse deleteLike(@PathVariable("user_id")Long user_id, @RequestBody @Valid LikeRequest request){
+        memberService.deleteLike(user_id, request.getName());
+
+        return new LikeResponse(user_id);
+    }
+
+
 }

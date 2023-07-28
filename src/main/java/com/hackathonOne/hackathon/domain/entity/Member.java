@@ -33,6 +33,7 @@ public class Member {
     }
 
     public void cancelCanEat(CanEat canEat){
+
         canEats.remove(canEat);
         canEat.setMember(null);
     }

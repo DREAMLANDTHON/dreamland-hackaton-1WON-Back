@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -83,6 +84,34 @@ public class MemberService {
         boolean exists = findMember.getCanEats().stream()
                 .anyMatch(o -> o.getName().equals(item_name));
         if(!exists) findMember.addCanEat(canEat);
+
+    }
+
+    @Transactional
+    public void deleteLike(Long user_id , String item_name){
+        Member findMember = memberRepository.findOne(user_id);
+
+
+//        boolean exists = findMember.getCanEats().stream()
+//                .anyMatch(o -> o.getName().equals(item_name));
+//
+//        if(exists){
+//            List<CanEat> removedLikes = findMember.getCanEats().stream().filter(o -> !o.getName().equals(item_name)).collect(Collectors.toList());
+//            findMember.setCanEats(removedLikes);
+//
+//        }
+
+        for(CanEat canEat : findMember.getCanEats()){
+            if(canEat.getName().equals(item_name)){
+
+                findMember.getCanEats().remove(canEat);
+                canEat.setMember(null);
+
+                return;
+            }
+        }
+//        findMember.getCanEats().stream()
+//                .anyMatch(o -> o.getName().equals(item_name))
 
     }
 }
