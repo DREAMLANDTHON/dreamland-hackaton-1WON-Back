@@ -62,6 +62,4 @@ public class MemberController {
         ).collect(Collectors.toList());
         return new GetProfileResponse(new GetProfileResponse.MemberDto(findMember.getName()), allergyDtos, specialTypeDtos, canEatDtos);
     }
-
-
 }

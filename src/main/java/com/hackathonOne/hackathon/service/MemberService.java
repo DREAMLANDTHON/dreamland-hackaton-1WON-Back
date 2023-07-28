@@ -72,17 +72,12 @@ public class MemberService {
     }
 
     @Transactional
-    public void deleteLike(Long user_id, String item_name) {
-        Member findMember = memberRepository.findOne(user_id);
-
-        for (CanEat canEat : findMember.getCanEats()) {
-            if (canEat.getName().equals(item_name)) {
-
-                findMember.getCanEats().remove(canEat);
-                canEat.setMember(null);
-
-                return;
-            }
-        }
+    public void deleteLike(Long userId, String item) {
+        Member member = memberRepository.findOne(userId);
+        List<CanEat> targets = member.getCanEats()
+                .stream()
+                .filter(food -> food.getName().equals(item))
+                .toList();
+        targets.forEach(member::cancelCanEat);
     }
 }

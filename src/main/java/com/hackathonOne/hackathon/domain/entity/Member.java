@@ -22,7 +22,7 @@ public class Member {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Allergy> allergies = new ArrayList<>();
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CanEat> canEats = new ArrayList<>();
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<SpecialType> specialTypes = new ArrayList<>();
@@ -34,7 +34,6 @@ public class Member {
     }
 
     public void cancelCanEat(CanEat canEat) {
-
         canEats.remove(canEat);
         canEat.setMember(null);
     }
@@ -61,5 +60,4 @@ public class Member {
 
         return member;
     }
-
 }
