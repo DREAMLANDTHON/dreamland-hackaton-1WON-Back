@@ -1,6 +1,7 @@
 package com.hackathonOne.hackathon.service;
 
 import com.hackathonOne.hackathon.domain.entity.Allergy;
+import com.hackathonOne.hackathon.domain.entity.CanEat;
 import com.hackathonOne.hackathon.domain.entity.Member;
 import com.hackathonOne.hackathon.domain.entity.SpecialType;
 import com.hackathonOne.hackathon.repository.MemberRepository;
@@ -72,4 +73,16 @@ public class MemberService {
 //        member.setSpecialTypes(spcialTypeList);
     }
 
+    @Transactional
+    public void updateLike(Long user_id , String item_name){
+        Member findMember = memberRepository.findOne(user_id);
+
+        CanEat canEat = new CanEat();
+        canEat.setName(item_name);
+//        findMember.getCanEats().stream().map(o -> {if (o.getName() == item_name) return ; });
+        boolean exists = findMember.getCanEats().stream()
+                .anyMatch(o -> o.getName().equals(item_name));
+        if(!exists) findMember.addCanEat(canEat);
+
+    }
 }

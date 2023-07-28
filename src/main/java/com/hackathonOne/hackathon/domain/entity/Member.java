@@ -27,10 +27,15 @@ public class Member {
         private List<SpecialType> specialTypes = new ArrayList<>();
 
     //== 연관관계 메서드 ==//
-//    public void addCanEat(CanEat canEat){
-//        CanEats.add(canEat);
-//        CanEat.setMember(this);
-//    }
+    public void addCanEat(CanEat canEat){
+        canEats.add(canEat);
+        canEat.setMember(this);
+    }
+
+    public void cancelCanEat(CanEat canEat){
+        canEats.remove(canEat);
+        canEat.setMember(null);
+    }
         public void addAllergy(Allergy allergy){
         allergies.add(allergy);
         allergy.setMember(this);
