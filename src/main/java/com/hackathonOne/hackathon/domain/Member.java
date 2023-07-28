@@ -5,12 +5,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
 public class Member {
 
-    @Id @GeneratedValue
+    @Id
     @Column(name="member_id")
     private Long id;
 
@@ -31,15 +32,15 @@ public class Member {
 //        CanEat.setMember(this);
 //    }
         public void addAllergy(Allergy allergy){
-        Allergies.add(allergy);
-        Allergy.setMember(this);
+        allergies.add(allergy);
+        allergy.setMember(this);
     }
         public void addSpecialType(SpecialType specialType){
-        SpecialTypes.add(specialType);
-        SpecialType.setMember(this);
+        specialTypes.add(specialType);
+        specialType.setMember(this);
     }
 
-    public static Member createMember(Member member, SpecialType... specialTypes, Allergy... allergies){
+    public static Member createMember(Member member, List<SpecialType> specialTypes, List<Allergy> allergies){
 
         for(SpecialType specialType : specialTypes){
             member.addSpecialType(specialType);
