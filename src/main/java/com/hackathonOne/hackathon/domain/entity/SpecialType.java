@@ -9,7 +9,7 @@ import lombok.Setter;
 public class SpecialType {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="specialType_id")
     private Long id;
 

@@ -1,5 +1,4 @@
 spring:
-
   datasource:
     url: jdbc:mariadb://database-test.cf88kudvdpgq.ap-southeast-1.rds.amazonaws.com:3306/Test
     driver-class-name: org.mariadb.jdbc.Driver

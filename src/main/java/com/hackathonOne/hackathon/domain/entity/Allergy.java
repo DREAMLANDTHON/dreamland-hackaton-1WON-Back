@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter @Setter
 public class Allergy {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="allergy_id")
     private Long id;
 

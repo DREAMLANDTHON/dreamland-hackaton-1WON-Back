@@ -9,7 +9,7 @@ import lombok.Setter;
 public class CanEat {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="canEat_id")
     private Long id;
 
