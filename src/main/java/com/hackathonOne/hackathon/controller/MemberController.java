@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin
 public class MemberController {
 
     private final MemberService memberService;
