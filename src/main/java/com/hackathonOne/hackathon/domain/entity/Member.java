@@ -1,4 +1,4 @@
-package com.hackathonOne.hackathon.domain;
+package com.hackathonOne.hackathon.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
