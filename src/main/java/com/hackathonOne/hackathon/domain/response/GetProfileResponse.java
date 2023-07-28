@@ -47,7 +47,7 @@ public class GetProfileResponse {
     public static class CanEatDto {
         private Long id;
         private String name;
-
+        private int likes;
         // getters and setters
     }
 }

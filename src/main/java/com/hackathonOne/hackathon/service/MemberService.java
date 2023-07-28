@@ -1,6 +1,7 @@
 package com.hackathonOne.hackathon.service;
 
 import com.hackathonOne.hackathon.domain.entity.Allergy;
+import com.hackathonOne.hackathon.domain.entity.CanEat;
 import com.hackathonOne.hackathon.domain.entity.Member;
 import com.hackathonOne.hackathon.domain.entity.SpecialType;
 import com.hackathonOne.hackathon.repository.MemberRepository;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -72,4 +74,44 @@ public class MemberService {
 //        member.setSpecialTypes(spcialTypeList);
     }
 
+    @Transactional
+    public void updateLike(Long user_id , String item_name){
+        Member findMember = memberRepository.findOne(user_id);
+
+        CanEat canEat = new CanEat();
+        canEat.setName(item_name);
+//        findMember.getCanEats().stream().map(o -> {if (o.getName() == item_name) return ; });
+        boolean exists = findMember.getCanEats().stream()
+                .anyMatch(o -> o.getName().equals(item_name));
+        if(!exists) findMember.addCanEat(canEat);
+
+    }
+
+    @Transactional
+    public void deleteLike(Long user_id , String item_name){
+        Member findMember = memberRepository.findOne(user_id);
+
+
+//        boolean exists = findMember.getCanEats().stream()
+//                .anyMatch(o -> o.getName().equals(item_name));
+//
+//        if(exists){
+//            List<CanEat> removedLikes = findMember.getCanEats().stream().filter(o -> !o.getName().equals(item_name)).collect(Collectors.toList());
+//            findMember.setCanEats(removedLikes);
+//
+//        }
+
+        for(CanEat canEat : findMember.getCanEats()){
+            if(canEat.getName().equals(item_name)){
+
+                findMember.getCanEats().remove(canEat);
+                canEat.setMember(null);
+
+                return;
+            }
+        }
+//        findMember.getCanEats().stream()
+//                .anyMatch(o -> o.getName().equals(item_name))
+
+    }
 }

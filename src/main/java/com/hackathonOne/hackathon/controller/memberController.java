@@ -8,6 +8,7 @@ import com.hackathonOne.hackathon.domain.response.AdditionalSignUpResponse;
 import com.hackathonOne.hackathon.domain.response.CreateMemberFirstResponse;
 import com.hackathonOne.hackathon.domain.response.GetProfileResponse;
 import com.hackathonOne.hackathon.domain.response.UpdateMemberResponse;
+import com.hackathonOne.hackathon.repository.CanEatRepository;
 import com.hackathonOne.hackathon.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 public class memberController {
 
     private final MemberService memberService;
+    private final CanEatRepository canEatRepository;
 
     /**
      * 최초 로그인 시 유저 정보 저장
@@ -63,7 +65,12 @@ public class memberController {
 
         List<GetProfileResponse.AllergyDto> allergyDtos = findMember.getAllergies().stream().map(o -> new GetProfileResponse.AllergyDto(o.getId(), o.getName())).collect(Collectors.toList());
         List<GetProfileResponse.SpecialTypeDto> specialTypeDtos = findMember.getSpecialTypes().stream().map(o -> new GetProfileResponse.SpecialTypeDto(o.getId(), o.getName())).collect(Collectors.toList());
-        List<GetProfileResponse.CanEatDto> canEatDtos = findMember.getCanEats().stream().map(o -> new GetProfileResponse.CanEatDto(o.getId(), o.getName())).collect(Collectors.toList());
+        List<GetProfileResponse.CanEatDto> canEatDtos = findMember.getCanEats().stream().map(o ->
+        {
+            int size = canEatRepository.findAllByName(o.getName()).size();
+            return new GetProfileResponse.CanEatDto(o.getId(), o.getName(),size);
+        }
+        ).collect(Collectors.toList());
         return new GetProfileResponse(new GetProfileResponse.MemberDto(findMember.getName()), allergyDtos, specialTypeDtos, canEatDtos);
     }
 
