@@ -1,4 +1,4 @@
-package com.hackathonOne.hackathon.domain;
+package com.hackathonOne.hackathon.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -6,10 +6,11 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-public class Allergy {
+public class SpecialType {
 
-    @Id @GeneratedValue
-    @Column(name="allergy_id")
+    @Id
+    @GeneratedValue
+    @Column(name="specialType_id")
     private Long id;
 
     private String name;
@@ -17,5 +18,4 @@ public class Allergy {
     @ManyToOne
     @JoinColumn(name="member_id")
     private Member member;
-
 }
